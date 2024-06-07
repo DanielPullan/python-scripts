@@ -1,4 +1,6 @@
-### Post-install script for Cyber Laptops
+## Post Install Script
+## A script to use on Fedora immediately post install.
+## Dan Pullan (https://danielpullan.co.uk) 07/06/24
 
 import subprocess
 
