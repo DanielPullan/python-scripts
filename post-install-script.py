@@ -37,14 +37,6 @@ def install_xrdp():
     subprocess.run(["systemctl", "enable", "xrdp"])
     subprocess.run(["systemctl", "start", "xrdp"])
 
-# def device_details()
-#     hostname
-#     ip addresses
-#     disk free
-#     memory free
-#     number of cpu cores
-#     operating system
-
 device_name = input("What would you like to call this device? ")
 
 name_device(device_name)
