@@ -20,6 +20,7 @@ def install_updates():
 
 def install_cockpit():
     subprocess.run(["dnf", "install", "cockpit", "-y"])
+    subprocess.run(["systemctl", "enable", "--now", "cockpit.socket"])
     subprocess.run(["firewall-cmd", "--add-service=cockpit"])
     subprocess.run(["firewall-cmd", "--add-service=cockpit", "--permanent"])
 
@@ -89,5 +90,13 @@ elif dark_mode_request in deny_list:
 else:
     print("I don't understand. If you would like to enable darkmode, please enable manually.")
 
-# device_details()
+reboot_confirmation = input("Reboot device?")
+
+if reboot_confirmation in confirm_list:
+    print("Rebooting")
+    subprocess.run(["sudo", "reboot", "now"])
+elif reboot_confirmation in deny_list:
+    print("Not rebooting.")
+else:
+    print("I don't understand. If you would like to reboot, please reboot manually.")
 
