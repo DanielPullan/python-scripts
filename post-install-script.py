@@ -31,6 +31,11 @@ def install_tailscale():
 def dark_mode():
     subprocess.run(["gsettings", "set", "org.gnome.desktop.interface", "color-scheme", "'prefer-dark'"])
 
+def install_xrdp():
+    subprocess.run(["dnf", "install", "xrdp"])
+    subprocess.run(["systemctl", "enable", "xrdp"])
+    subprocess.run(["systemctl", "start", "xrdp"])
+
 # def device_details()
 #     hostname
 #     ip addresses
@@ -49,14 +54,15 @@ enable_ssh()
 
 install_updates()
 
-program_installs = input("Would you like to install Cockpit and Tailscale? ")
+program_installs = input("Would you like to install Cockpit, Tailscale and XRDP? ")
 
 if program_installs in confirm_list:
     install_cockpit()
     install_tailscale()
-    print("Installed Cockpit and Tailscale")
+    install_xrdp()
+    print("Installed Cockpit, Tailscale and XRDP")
 elif program_installs in deny_list:
-    confirmation = input("Would you like to install Cockpit or Tailscale? 1 - Cockpit, 2 - Tailscale ")
+    confirmation = input("Would you like to install Cockpit or Tailscale? 1 - Cockpit, 2 - Tailscale, 3 - XRDP ")
     if confirmation in deny_list:
         print("Skipping installs")
     elif confirmation == 1:
@@ -65,10 +71,13 @@ elif program_installs in deny_list:
     elif confirmation == 2:
         install_tailscale()
         print("Installed tailscale")
+    elif confirmation == 3:
+        install_xrdp()
+        print("Installed XRDP")
     else:  
-        print("I don't understand. If you would like to install Cockpit or Tailscale, please install manually.")
+        print("I don't understand. If you would like to install Cockpit, Tailscale or XRDP, please install manually.")
 else:  
-        print("I don't understand. If you would like to install Cockpit or Tailscale, please install manually.")
+        print("I don't understand. If you would like to install Cockpit, Tailscale or XRDP, please install manually.")
 
 dark_mode_request = input("is this device going to use a GUI? ")
 
