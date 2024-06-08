@@ -2,7 +2,7 @@ import urllib.request
 import os
 import subprocess
 
-print("test")
+print("test2")
 
 homepath= os.path.expanduser('~')
 
