@@ -3,45 +3,73 @@
 ## Dan Pullan (https://danielpullan.co.uk) 07/06/24
 
 import subprocess
+import urllib.request
+import os
+
+
+homepath= os.path.expanduser('~')
 
 confirm_list = ['Yes', 'yes', 'Y', 'y', 'Yarp', 'yarp']
-deny_list = ['No', 'no', 'N', 'n', 'Narp', 'narp'] 
+deny_list = ['No', 'no', 'N', 'n', 'Narp', 'narp']
+known_devices = ["Zig", "Zag"]
 
 def name_device(name):
     subprocess.run(["hostnamectl", "set-hostname", name])
+    print("Name set to: ", name)
     
 def enable_ssh():
     subprocess.run(["dnf", "install", "openssh-server", "-y"])
     subprocess.run(["systemctl", "enable", "sshd"])
     subprocess.run(["systemctl", "start", "sshd"])
+    print("SSH access enabled.")
 
 def install_updates():
     subprocess.run(["dnf", "update", "-y"])
+    print("Updates completed.")
 
 def install_cockpit():
     subprocess.run(["dnf", "install", "cockpit", "-y"])
     subprocess.run(["systemctl", "enable", "--now", "cockpit.socket"])
     subprocess.run(["firewall-cmd", "--add-service=cockpit"])
     subprocess.run(["firewall-cmd", "--add-service=cockpit", "--permanent"])
+    print("Cockpit installed and enabled.")
 
 def install_tailscale():
     subprocess.run(["dnf", "config-manager", "--add-repo", "https://pkgs.tailscale.com/stable/fedora/tailscale.repo"])
     subprocess.run(["dnf", "install", "tailscale", "-y"])
     subprocess.run(["systemctl", "enable", "--now", "tailscaled"])
+    print("Tailscale installed and enabled.")
 
 def dark_mode():
     subprocess.run(["gsettings", "set", "org.gnome.desktop.interface", "color-scheme", "'prefer-dark'"])
+    print("Dark mode set.")
 
 def install_xrdp():
     subprocess.run(["dnf", "install", "xrdp"])
     subprocess.run(["systemctl", "enable", "xrdp"])
     subprocess.run(["systemctl", "start", "xrdp"])
+    print("XRDP installed and enabled.")
+
+def download_wallpaper(device_name):
+    url = 'https://3264.uk/images/'+device_name+".jpg"
+    save_as = homepath+"/Pictures/wallpapertest.jpg"
+    urllib.request.urlretrieve(url, save_as)
+    subprocess.run(["gsettings","set", "org.gnome.desktop.background", "picture-uri", save_as])
+    subprocess.run(["gsettings","set", "org.gnome.desktop.background", "picture-uri-dark", save_as])
+    print("Wallpaper set.")
 
 device_name = input("What would you like to call this device? ")
 
 name_device(device_name)
 
 print("Hostname set to: ", device_name)
+
+if device_name in known_devices:
+    download_wallpaper(device_name)
+    print("Known wallpaper downloaded.")
+else:  
+    download_wallpaper("tech")
+    print("Unknown wallpaper downloaded.")
 
 enable_ssh()
 
