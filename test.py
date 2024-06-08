@@ -2,6 +2,7 @@ import urllib.request
 import os
 import subprocess
 
+print("test")
 
 homepath= os.path.expanduser('~')
 
