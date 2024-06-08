@@ -11,7 +11,7 @@ homepath= os.path.expanduser('~')
 
 confirm_list = ['Yes', 'yes', 'Y', 'y', 'Yarp', 'yarp']
 deny_list = ['No', 'no', 'N', 'n', 'Narp', 'narp']
-known_devices = ["Zig", "Zag"]
+known_devices = ["zig", "zag"]
 
 def name_device(name):
     subprocess.run(["hostnamectl", "set-hostname", name])
