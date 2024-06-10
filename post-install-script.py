@@ -18,25 +18,25 @@ def name_device(name):
     print("Name set to: ", name)
     
 def enable_ssh():
-    subprocess.run(["dnf", "install", "openssh-server", "-y"])
+    subprocess.run(["sudo", "dnf", "install", "openssh-server", "-y"])
     subprocess.run(["systemctl", "enable", "sshd"])
     subprocess.run(["systemctl", "start", "sshd"])
     print("SSH access enabled.")
 
 def install_updates():
-    subprocess.run(["dnf", "update", "-y"])
+    subprocess.run(["sudo", "dnf", "update", "-y"])
     print("Updates completed.")
 
 def install_cockpit():
-    subprocess.run(["dnf", "install", "cockpit", "-y"])
+    subprocess.run(["sudo", "dnf", "install", "cockpit", "-y"])
     subprocess.run(["systemctl", "enable", "--now", "cockpit.socket"])
     subprocess.run(["firewall-cmd", "--add-service=cockpit"])
     subprocess.run(["firewall-cmd", "--add-service=cockpit", "--permanent"])
     print("Cockpit installed and enabled.")
 
 def install_tailscale():
-    subprocess.run(["dnf", "config-manager", "--add-repo", "https://pkgs.tailscale.com/stable/fedora/tailscale.repo"])
-    subprocess.run(["dnf", "install", "tailscale", "-y"])
+    subprocess.run(["sudo", "dnf", "config-manager", "--add-repo", "https://pkgs.tailscale.com/stable/fedora/tailscale.repo"])
+    subprocess.run(["sudo", "dnf", "install", "tailscale", "-y"])
     subprocess.run(["systemctl", "enable", "--now", "tailscaled"])
     print("Tailscale installed and enabled.")
 
@@ -45,7 +45,7 @@ def dark_mode():
     print("Dark mode set.")
 
 def install_xrdp():
-    subprocess.run(["dnf", "install", "xrdp"])
+    subprocess.run(["dnf", "install", "xrdp", "-y"])
     subprocess.run(["systemctl", "enable", "xrdp"])
     subprocess.run(["systemctl", "start", "xrdp"])
     print("XRDP installed and enabled.")
