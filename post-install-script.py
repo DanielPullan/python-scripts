@@ -1,6 +1,7 @@
 ## Post Install Script
 ## A script to use on Fedora immediately post install.
-## Dan Pullan (https://danielpullan.co.uk) 07/06/24
+## Dan Pullan (https://danielpullan.co.uk) 10/06/24
+## State: Done (for now)
 
 import subprocess
 import urllib.request
